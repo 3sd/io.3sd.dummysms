@@ -15,7 +15,7 @@ function _civicrm_api3_sms_provider_Receive_spec(&$spec) {
   $spec['content']['api.required'] = 1;
   $spec['content']['title'] = 'Content of SMS message';
   $spec['id']['title'] = 'Id of message';
-  $spec['id']['title'] = 'can be set to any numeric value or left empty';
+  $spec['id']['description'] = 'can be set to any numeric value or left empty';
 }
 
 /**
