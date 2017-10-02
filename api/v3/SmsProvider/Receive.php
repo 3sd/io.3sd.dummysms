@@ -37,6 +37,7 @@ function civicrm_api3_sms_provider_Receive($params) {
   if ($smsResult->id) {
     $params['id'] = $smsResult->id;
     $activity = civicrm_api3('Activity', 'getsingle', $params);
+    $sms->logToFile($smsResult->id, $params['from_number'], $params['content'], $sms::MESSAGE_DIRECTION_INBOUND);
     return civicrm_api3_create_success(array($activity), $params, 'SmsProvider', 'Receive');
   }
 

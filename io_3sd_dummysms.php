@@ -14,6 +14,9 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
   protected $_id = 0;
 
 
+  const MESSAGE_DIRECTION_OUTBOUND = 1;
+  const MESSAGE_DIRECTION_INBOUND = 2;
+
   /**
    * We only need one instance of this object. So we use the singleton
    * pattern and cache the instance in this variable
@@ -68,23 +71,43 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
    * @access public
    */
   function send($recipients, $header, $message, $jobID = NULL, $userID = NULL) {
-    // "Send" a message to ConfigAndLog/sms_out.log
-    try{
-      // Write to a file in ConfigAndLogDir
-      $config = CRM_Core_Config::singleton();
-      $id = date('YmdHis');
-      if (!empty($config->configAndLogDir)) {
-        $file = $config->configAndLogDir . "/sms_out.log";
-        $message = $id . ': to_number: ' . $header['To'] . '; ' . $message;
-        file_put_contents($file, $message.PHP_EOL, FILE_APPEND | LOCK_EX);
-      }
-
-    }catch(Exception $e) {
+    $id = date('YmdHis');
+    try {
+      self::logToFile($id, $header['To'], $message, self::MESSAGE_DIRECTION_OUTBOUND);
+      $this->createActivity($id, $message, $header, $jobID, $userID);
+    } catch(Exception $e) {
       return PEAR::raiseError( $e->getMessage(), $e->getCode(), PEAR_ERROR_RETURN );
     }
-
-    $this->createActivity($id, $message, $header, $jobID, $userID);
     return $id;
+  }
+
+  /**
+   * Write the given SMS message to the sms log file.
+   *
+   * @param string $id Unique (in the scope of the log file0 ID for this message.
+   * @param string $number Mobile phone number for the recipient (if outbound)
+   *  or sender (if inbound)
+   * @param string $message The message content
+   * @param int Whether the message is inbound (self::MESSAGE_DIRECTION_INBOUND)
+   *  or outbound (self::MESSAGE_DIRECTION_OUTBOUND)
+   */
+  function logToFile($id, $number, $message, $direction_id) {
+    $config = CRM_Core_Config::singleton();
+    if (!empty($config->configAndLogDir)) {
+      switch ($direction_id) {
+        case self::MESSAGE_DIRECTION_INBOUND:
+          $direction_label = "from";
+        break;
+
+        case self::MESSAGE_DIRECTION_OUTBOUND:
+          $direction_label = "to";
+        break;
+
+      }
+      $file = $config->configAndLogDir . "/sms_out.log";
+      $line = "{$id}: {$direction_label}_number: {$number}; {$message}" . PHP_EOL;
+      file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
+    }
   }
 
   function inbound($from_number, $content, $id=NULL) {
