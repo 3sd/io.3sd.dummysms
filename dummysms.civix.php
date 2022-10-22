@@ -24,7 +24,7 @@ class CRM_Dummysms_ExtensionUtil {
    *   Translated text.
    * @see ts
    */
-  public static function ts($text, $params = []): string {
+  public static function ts($text, $params = []) {
     if (!array_key_exists('domain', $params)) {
       $params['domain'] = [self::LONG_NAME, NULL];
     }
@@ -41,7 +41,7 @@ class CRM_Dummysms_ExtensionUtil {
    *   Ex: 'http://example.org/sites/default/ext/org.example.foo'.
    *   Ex: 'http://example.org/sites/default/ext/org.example.foo/css/foo.css'.
    */
-  public static function url($file = NULL): string {
+  public static function url($file = NULL) {
     if ($file === NULL) {
       return rtrim(CRM_Core_Resources::singleton()->getUrl(self::LONG_NAME), '/');
     }
@@ -79,13 +79,6 @@ class CRM_Dummysms_ExtensionUtil {
 
 use CRM_Dummysms_ExtensionUtil as E;
 
-function _dummysms_civix_mixin_polyfill() {
-  if (!class_exists('CRM_Extension_MixInfo')) {
-    $polyfill = __DIR__ . '/mixin/polyfill.php';
-    (require $polyfill)(E::LONG_NAME, E::SHORT_NAME, E::path());
-  }
-}
-
 /**
  * (Delegated) Implements hook_civicrm_config().
  *
@@ -112,7 +105,6 @@ function _dummysms_civix_civicrm_config(&$config = NULL) {
 
   $include_path = $extRoot . PATH_SEPARATOR . get_include_path();
   set_include_path($include_path);
-  _dummysms_civix_mixin_polyfill();
 }
 
 /**
@@ -125,7 +117,6 @@ function _dummysms_civix_civicrm_install() {
   if ($upgrader = _dummysms_civix_upgrader()) {
     $upgrader->onInstall();
   }
-  _dummysms_civix_mixin_polyfill();
 }
 
 /**
@@ -166,7 +157,6 @@ function _dummysms_civix_civicrm_enable() {
       $upgrader->onEnable();
     }
   }
-  _dummysms_civix_mixin_polyfill();
 }
 
 /**
