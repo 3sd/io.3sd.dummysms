@@ -12,8 +12,8 @@
     <url desc="Main Extension Page">https://github.com/mattwire/io.3sd.dummysms</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2017-08-06</releaseDate>
-  <version>1.0</version>
+  <releaseDate>2022-10-22</releaseDate>
+  <version>1.1</version>
   <develStage>stable</develStage>
   <compatibility>
     <ver>4.7</ver>
@@ -21,5 +21,6 @@
   <comments>Implements a dummy SMS provider for CiviCRM</comments>
   <civix>
     <namespace>CRM/Dummysms</namespace>
+    <format>22.10.0</format>
   </civix>
 </extension>
