@@ -45,7 +45,7 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
   static function &singleton($providerParams = array(), $force = FALSE) {
     if(isset($providerParams['provider'])){
       $providers = CRM_SMS_BAO_Provider::getProviders(NULL, array('name' => $providerParams['provider']));
-      $providerID = current($providers)['id'];
+      $providerID = empty($providers) ? 0 : current($providers)['id'];
     }else{
       $providerID = CRM_Utils_Array::value('provider_id', $providerParams);
     }
