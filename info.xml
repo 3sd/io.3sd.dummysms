@@ -21,6 +21,9 @@
   <comments>Implements a dummy SMS provider for CiviCRM</comments>
   <civix>
     <namespace>CRM/Dummysms</namespace>
-    <format>22.10.0</format>
+    <format>23.02.1</format>
   </civix>
+  <classloader>
+    <psr4 prefix="Civi\" path="Civi"/>
+  </classloader>
 </extension>
