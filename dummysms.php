@@ -33,15 +33,6 @@ function dummysms_civicrm_install() {
 }
 
 /**
- * Implements hook_civicrm_postInstall().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
- */
-function dummysms_civicrm_postInstall() {
-  _dummysms_civix_civicrm_postInstall();
-}
-
-/**
  * Implements hook_civicrm_uninstall().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
@@ -59,7 +50,6 @@ function dummysms_civicrm_uninstall() {
     }
   }
 
-  _dummysms_civix_civicrm_uninstall();
 }
 
 /**
@@ -101,16 +91,6 @@ function dummysms_civicrm_disable() {
     }
   }
 
-  _dummysms_civix_civicrm_disable();
-}
-
-/**
- * Implements hook_civicrm_upgrade().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
- */
-function dummysms_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _dummysms_civix_civicrm_upgrade($op, $queue);
 }
 
 // --- Functions below this ship commented out. Uncomment as required. ---
