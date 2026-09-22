@@ -10,7 +10,7 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
    * provider details
    * @var	string
    */
-  protected $_providerInfo = array();
+  protected $_providerInfo = [];
   protected $_id = 0;
 
 
@@ -24,7 +24,7 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
    * @var object
    * @static
    */
-  static private $_singleton = array();
+  static private $_singleton = [];
 
   /**
    * Constructor
@@ -42,9 +42,9 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
    * @static
    *
    */
-  static function &singleton($providerParams = array(), $force = FALSE) {
+  static function &singleton($providerParams = [], $force = FALSE) {
     if(isset($providerParams['provider'])){
-      $providers = CRM_SMS_BAO_Provider::getProviders(NULL, array('name' => $providerParams['provider']));
+      $providers = CRM_SMS_BAO_Provider::getProviders(NULL, ['name' => $providerParams['provider']]);
       $providerID = empty($providers) ? 0 : current($providers)['id'];
     }else{
       $providerID = $providerParams['provider_id'] ?? NULL;
@@ -53,7 +53,7 @@ class io_3sd_dummysms extends CRM_SMS_Provider {
     $cacheKey   = (int) $providerID;
 
     if (!isset(self::$_singleton[$cacheKey]) || $force) {
-      $provider = array();
+      $provider = [];
       if ($providerID) {
         $provider = CRM_SMS_BAO_Provider::getProviderInfo($providerID);
       }
