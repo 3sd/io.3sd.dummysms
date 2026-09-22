@@ -19,13 +19,13 @@ function dummysms_civicrm_config(&$config) {
 function dummysms_civicrm_install() {
   $groupID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup','sms_provider_name','id','name');
   $params  =
-    array('option_group_id' => $groupID,
+    ['option_group_id' => $groupID,
       'label' => 'DummySMS',
       'value' => 'io.3sd.dummysms',
       'name'  => 'dummysms',
       'is_default' => 1,
       'is_active'  => 1,
-      'version'    => 3,);
+      'version'    => 3,];
 
   civicrm_api3( 'option_value','create', $params );
 
@@ -42,7 +42,7 @@ function dummysms_civicrm_uninstall() {
   if ($optionID)
     CRM_Core_BAO_OptionValue::del($optionID);
 
-  $filter    =  array('name'  => 'io.3sd.dummysms');
+  $filter    =  ['name'  => 'io.3sd.dummysms'];
   $Providers =  CRM_SMS_BAO_Provider::getProviders(False, $filter, False);
   if ($Providers){
     foreach($Providers as $key => $value){
@@ -62,7 +62,7 @@ function dummysms_civicrm_enable() {
   if ($optionID)
     CRM_Core_BAO_OptionValue::setIsActive($optionID, TRUE);
 
-  $filter    =  array('name' => 'io.3sd.dummysms');
+  $filter    =  ['name' => 'io.3sd.dummysms'];
   $Providers =  CRM_SMS_BAO_Provider::getProviders(False, $filter, False);
   if ($Providers){
     foreach($Providers as $key => $value){
@@ -83,7 +83,7 @@ function dummysms_civicrm_disable() {
   if ($optionID)
     CRM_Core_BAO_OptionValue::setIsActive($optionID, FALSE);
 
-  $filter    =  array('name' =>  'io.3sd.dummysms');
+  $filter    =  ['name' =>  'io.3sd.dummysms'];
   $Providers =  CRM_SMS_BAO_Provider::getProviders(False, $filter, False);
   if ($Providers){
     foreach($Providers as $key => $value){
