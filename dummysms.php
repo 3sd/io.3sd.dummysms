@@ -40,7 +40,7 @@ function dummysms_civicrm_install() {
 function dummysms_civicrm_uninstall() {
   $optionID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionValue','dummysms','id','name');
   if ($optionID)
-    CRM_Core_BAO_OptionValue::del($optionID);
+    CRM_Core_BAO_OptionValue::deleteRecord(['id' => $optionID]);
 
   $filter    =  array('name'  => 'io.3sd.dummysms');
   $Providers =  CRM_SMS_BAO_Provider::getProviders(False, $filter, False);
